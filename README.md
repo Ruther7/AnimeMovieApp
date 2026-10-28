@@ -82,3 +82,10 @@ The frontend will be available at `http://localhost:9000` (or another Vite port)
 
 - Backend API has been verified by browser requests returning seeded JSON.
 - Frontend build has been verified with `npm run build`.
+- Integrated pages verified: Home, Catalog, Anime Detail, Watchlist add/remove flow.
+
+## Known Limitations
+
+- The `animes` table is used instead of Laravel's default pluralization for the `Anime` model; the model and watchlist validation explicitly reference this table name.
+- The watchlist is a simple single-user list without authentication.
+- Poster images use placeholder URLs (`example.com`) from the seeder.
