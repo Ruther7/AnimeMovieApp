@@ -20,8 +20,8 @@ class AnimeSeeder extends Seeder
                 'release_year' => 2006,
                 'status' => 'completed',
                 'rating' => 9.0,
-                'poster_url' => 'https://picsum.photos/seed/death-note/300/450',
-                'banner_url' => 'https://picsum.photos/seed/death-note-banner/1200/600',
+                'poster_url' => 'https://cdn.myanimelist.net/images/anime/1079/138100.jpg',
+                'banner_url' => 'https://cdn.myanimelist.net/images/anime/1079/138100l.jpg',
             ],
             [
                 'title' => 'Attack on Titan',
@@ -30,8 +30,8 @@ class AnimeSeeder extends Seeder
                 'release_year' => 2013,
                 'status' => 'completed',
                 'rating' => 9.1,
-                'poster_url' => 'https://picsum.photos/seed/attack-on-titan/300/450',
-                'banner_url' => 'https://picsum.photos/seed/attack-on-titan-banner/1200/600',
+                'poster_url' => 'https://cdn.myanimelist.net/images/anime/10/47347.jpg',
+                'banner_url' => 'https://cdn.myanimelist.net/images/anime/10/47347l.jpg',
             ],
             [
                 'title' => 'Demon Slayer',
@@ -40,8 +40,8 @@ class AnimeSeeder extends Seeder
                 'release_year' => 2019,
                 'status' => 'ongoing',
                 'rating' => 8.9,
-                'poster_url' => 'https://picsum.photos/seed/demon-slayer/300/450',
-                'banner_url' => 'https://picsum.photos/seed/demon-slayer-banner/1200/600',
+                'poster_url' => 'https://cdn.myanimelist.net/images/anime/1286/99889.jpg',
+                'banner_url' => 'https://cdn.myanimelist.net/images/anime/1286/99889l.jpg',
             ],
             [
                 'title' => 'Spy x Family',
@@ -50,8 +50,8 @@ class AnimeSeeder extends Seeder
                 'release_year' => 2022,
                 'status' => 'ongoing',
                 'rating' => 8.6,
-                'poster_url' => 'https://picsum.photos/seed/spy-x-family/300/450',
-                'banner_url' => 'https://picsum.photos/seed/spy-x-family-banner/1200/600',
+                'poster_url' => 'https://cdn.myanimelist.net/images/anime/1441/122795.jpg',
+                'banner_url' => 'https://cdn.myanimelist.net/images/anime/1441/122795l.jpg',
             ],
             [
                 'title' => 'Fullmetal Alchemist: Brotherhood',
@@ -60,8 +60,8 @@ class AnimeSeeder extends Seeder
                 'release_year' => 2009,
                 'status' => 'completed',
                 'rating' => 9.2,
-                'poster_url' => 'https://picsum.photos/seed/fullmetal-alchemist/300/450',
-                'banner_url' => 'https://picsum.photos/seed/fullmetal-alchemist-banner/1200/600',
+                'poster_url' => 'https://cdn.myanimelist.net/images/anime/1208/94745.jpg',
+                'banner_url' => 'https://cdn.myanimelist.net/images/anime/1208/94745l.jpg',
             ],
         ];
 
