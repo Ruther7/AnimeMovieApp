@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, watch, provide } from 'vue'
 import { watchlistApi } from './api/anime'
 import { useRoute } from 'vue-router'
 
@@ -22,6 +22,12 @@ onMounted(() => {
 watch(() => route.path, () => {
   loadCount()
 })
+
+const refreshWatchlistCount = () => {
+  loadCount()
+}
+
+provide('refreshWatchlistCount', refreshWatchlistCount)
 </script>
 
 <template>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, inject } from 'vue'
 import { useRouter } from 'vue-router'
 import { watchlistApi } from '../api/anime'
 
@@ -8,6 +8,7 @@ const items = ref<any[]>([])
 const loading = ref(false)
 const error = ref('')
 const fetchId = ref(0)
+const refreshWatchlistCount = inject<(fn?: any) => void>('refreshWatchlistCount', () => {})
 
 async function safeLoad() {
   const currentId = ++fetchId.value
@@ -45,6 +46,7 @@ async function remove(id: number) {
   try {
     await watchlistApi.remove(id)
     items.value = items.value.filter((w) => w.id !== id)
+    refreshWatchlistCount()
   } catch {
     // ignore
   }

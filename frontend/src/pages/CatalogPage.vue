@@ -34,7 +34,12 @@ async function safeFetch() {
   try {
     const controller = new AbortController()
     const timeoutId = setTimeout(() => controller.abort(), 10000)
-    const res = await fetch('/api/anime', { signal: controller.signal })
+    const params = new URLSearchParams()
+    if (search.value) params.set('search', search.value)
+    if (genreFilter.value) params.set('genre', genreFilter.value)
+    if (statusFilter.value) params.set('status', statusFilter.value)
+    const url = '/api/anime' + (params.toString() ? `?${params.toString()}` : '')
+    const res = await fetch(url, { signal: controller.signal })
     clearTimeout(timeoutId)
     const data = await res.json()
     if (currentId === fetchId.value) {

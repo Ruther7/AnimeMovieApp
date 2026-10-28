@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, inject } from 'vue'
 import { useRoute } from 'vue-router'
 import { watchlistApi } from '../api/anime'
 
@@ -24,6 +24,7 @@ const watchlistItems = ref<any[]>([])
 const inWatchlist = ref(false)
 const loading = ref(true)
 const error = ref('')
+const refreshWatchlistCount = inject<(fn?: any) => void>('refreshWatchlistCount', () => {})
 
 onMounted(async () => {
   const id = Number(route.params.id)
@@ -55,11 +56,13 @@ async function toggleWatchlist() {
         await watchlistApi.remove(item.id)
         watchlistItems.value = watchlistItems.value.filter((w: any) => w.id !== item.id)
         inWatchlist.value = false
+        refreshWatchlistCount()
       }
     } else {
       const item = await watchlistApi.add(anime.value.id)
       watchlistItems.value.push(item)
       inWatchlist.value = true
+      refreshWatchlistCount()
     }
   } catch {
     // ignore watchlist toggle error in UI
@@ -78,28 +81,26 @@ async function toggleWatchlist() {
     </div>
 
     <div v-else-if="anime" class="anime-detail">
-      <div class="banner" :style="`background-image: url('${anime.banner_url || anime.poster_url}')`">
-        <div class="overlay">
-          <div class="content">
-            <div class="row items-start q-gutter-lg">
-              <div class="poster-wrapper" style="width: 220px; padding-top: 150%;">
-                <img :src="anime.poster_url" :alt="anime.title" class="poster-img" />
-              </div>
-              <div class="info">
-                <div class="text-h3 text-weight-bold">{{ anime.title }}</div>
-                <div class="q-mt-sm">
-                  <q-chip v-for="g in anime.genres" :key="g" dense color="primary" text-color="white" :label="g" />
-                </div>
-                <div class="q-mt-md text-subtitle1">
-                  <div><strong>Year:</strong> {{ anime.release_year }}</div>
-                  <div><strong>Status:</strong> {{ anime.status }}</div>
-                  <div><strong>Rating:</strong> {{ anime.rating }}/10</div>
-                </div>
-                <p class="q-mt-md text-body1">{{ anime.synopsis }}</p>
-                <q-btn :label="inWatchlist ? 'Remove from Watchlist' : 'Add to Watchlist'" :color="inWatchlist ? 'negative' : 'primary'" class="q-mt-md" @click="toggleWatchlist" />
-                <q-btn flat label="Back to Catalog" class="q-mt-md q-ml-sm" to="/catalog" />
-              </div>
+      <div class="banner" :style="`background-image: url('${anime.banner_url || anime.poster_url}')`"></div>
+      <div class="overlay"></div>
+      <div class="content">
+        <div class="row items-start q-gutter-lg">
+          <div class="poster-wrapper" style="width: 220px; padding-top: 150%;">
+            <img :src="anime.poster_url" :alt="anime.title" class="poster-img" />
+          </div>
+          <div class="info">
+            <div class="text-h3 text-weight-bold">{{ anime.title }}</div>
+            <div class="q-mt-sm">
+              <q-chip v-for="g in anime.genres" :key="g" dense color="primary" text-color="white" :label="g" />
             </div>
+            <div class="q-mt-md text-subtitle1">
+              <div><strong>Year:</strong> {{ anime.release_year }}</div>
+              <div><strong>Status:</strong> {{ anime.status }}</div>
+              <div><strong>Rating:</strong> {{ anime.rating }}/10</div>
+            </div>
+            <p class="q-mt-md text-body1">{{ anime.synopsis }}</p>
+            <q-btn :label="inWatchlist ? 'Remove from Watchlist' : 'Add to Watchlist'" :color="inWatchlist ? 'negative' : 'primary'" class="q-mt-md" @click="toggleWatchlist" />
+            <q-btn flat label="Back to Catalog" class="q-mt-md q-ml-sm" to="/catalog" />
           </div>
         </div>
       </div>
@@ -110,21 +111,27 @@ async function toggleWatchlist() {
 <style scoped>
 .banner {
   width: 100%;
-  min-height: 60vh;
+  height: 50vh;
+  min-height: 320px;
   background-size: cover;
   background-position: center;
-  position: relative;
+  background-repeat: no-repeat;
 }
 .overlay {
   position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.4));
-  display: flex;
-  align-items: flex-end;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50vh;
+  min-height: 320px;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0.9));
+  pointer-events: none;
 }
 .content {
-  padding: 2rem;
-  width: 100%;
+  position: relative;
+  margin-top: -30vh;
+  padding: 0 2rem 2rem;
+  z-index: 2;
 }
 .info {
   max-width: 700px;

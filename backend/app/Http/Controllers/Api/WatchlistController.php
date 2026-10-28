@@ -22,6 +22,7 @@ class WatchlistController extends Controller
         ]);
 
         $item = Watchlist::create($validated);
+        $item->load('anime');
 
         return response()->json($item, 201);
     }
