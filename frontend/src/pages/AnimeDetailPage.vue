@@ -85,8 +85,10 @@ async function toggleWatchlist() {
       <div class="overlay"></div>
       <div class="content">
         <div class="row items-start q-gutter-lg">
-          <div class="poster-wrapper" style="width: 220px; padding-top: 150%;">
-            <img :src="anime.poster_url" :alt="anime.title" class="poster-img" />
+          <div class="col-auto">
+            <div class="poster-wrapper">
+              <img :src="anime.poster_url" :alt="anime.title" class="poster-img" />
+            </div>
           </div>
           <div class="info">
             <div class="text-h3 text-weight-bold">{{ anime.title }}</div>
@@ -137,17 +139,17 @@ async function toggleWatchlist() {
   max-width: 700px;
 }
 .poster-wrapper {
-  position: relative;
-  width: 100%;
-  padding-top: 150%;
+  width: 220px;
+  aspect-ratio: 2 / 3;
   overflow: hidden;
   background: #1e1e1e;
+  border-radius: 8px;
+  flex-shrink: 0;
 }
 .poster-img {
-  position: absolute;
-  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
 }
 </style>
