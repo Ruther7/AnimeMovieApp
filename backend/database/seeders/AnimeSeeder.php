@@ -20,8 +20,8 @@ class AnimeSeeder extends Seeder
                 'release_year' => 2024,
                 'status' => 'ongoing',
                 'rating' => 8.7,
-                'poster_url' => 'https://example.com/posters/neon-blade.jpg',
-                'banner_url' => 'https://example.com/banners/neon-blade.jpg',
+                'poster_url' => 'https://picsum.photos/seed/neon-blade/300/450',
+                'banner_url' => 'https://picsum.photos/seed/neon-blade-banner/1200/600',
             ],
             [
                 'title' => 'Starlight Academy',
@@ -30,8 +30,8 @@ class AnimeSeeder extends Seeder
                 'release_year' => 2023,
                 'status' => 'completed',
                 'rating' => 8.2,
-                'poster_url' => 'https://example.com/posters/starlight-academy.jpg',
-                'banner_url' => 'https://example.com/banners/starlight-academy.jpg',
+                'poster_url' => 'https://picsum.photos/seed/starlight-academy/300/450',
+                'banner_url' => 'https://picsum.photos/seed/starlight-academy-banner/1200/600',
             ],
             [
                 'title' => 'Whisper of the Tide',
@@ -40,8 +40,8 @@ class AnimeSeeder extends Seeder
                 'release_year' => 2025,
                 'status' => 'upcoming',
                 'rating' => 9.0,
-                'poster_url' => 'https://example.com/posters/whisper-tide.jpg',
-                'banner_url' => 'https://example.com/banners/whisper-tide.jpg',
+                'poster_url' => 'https://picsum.photos/seed/whisper-tide/300/450',
+                'banner_url' => 'https://picsum.photos/seed/whisper-tide-banner/1200/600',
             ],
             [
                 'title' => 'Iron Bloom Tournament',
@@ -50,8 +50,8 @@ class AnimeSeeder extends Seeder
                 'release_year' => 2024,
                 'status' => 'ongoing',
                 'rating' => 7.9,
-                'poster_url' => 'https://example.com/posters/iron-bloom.jpg',
-                'banner_url' => 'https://example.com/banners/iron-bloom.jpg',
+                'poster_url' => 'https://picsum.photos/seed/iron-bloom/300/450',
+                'banner_url' => 'https://picsum.photos/seed/iron-bloom-banner/1200/600',
             ],
             [
                 'title' => 'Midnight Library',
@@ -60,8 +60,8 @@ class AnimeSeeder extends Seeder
                 'release_year' => 2023,
                 'status' => 'completed',
                 'rating' => 8.5,
-                'poster_url' => 'https://example.com/posters/midnight-library.jpg',
-                'banner_url' => 'https://example.com/banners/midnight-library.jpg',
+                'poster_url' => 'https://picsum.photos/seed/midnight-library/300/450',
+                'banner_url' => 'https://picsum.photos/seed/midnight-library-banner/1200/600',
             ],
         ];
 

@@ -21,12 +21,12 @@ onMounted(() => {
 <template>
   <q-layout view="lHh lpr lFf">
     <q-header elevated class="bg-dark text-white">
-      <q-toolbar>
+      <q-toolbar class="q-gutter-md">
         <q-btn flat round dense icon="movie" aria-label="Menu" />
         <q-toolbar-title class="text-weight-bold">
           Anime Movie App
         </q-toolbar-title>
-        <q-btn flat label="Home" to="/" />
+        <q-btn flat label="Home" to="/" class="q-ml-md" />
         <q-btn flat label="Catalog" to="/catalog" />
         <q-btn flat :label="`Watchlist (${watchlistCount})`" to="/watchlist" />
       </q-toolbar>
