@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { animeApi } from '../api/anime'
+
+const router = useRouter()
 
 export interface Anime {
   id: number
@@ -18,7 +19,6 @@ export interface Anime {
   deleted_at?: string | null
 }
 
-const router = useRouter()
 const featured = ref<Anime | null>(null)
 const popular = ref<Anime[]>([])
 const recent = ref<Anime[]>([])
@@ -27,7 +27,8 @@ const error = ref('')
 
 onMounted(async () => {
   try {
-    const data = await animeApi.list()
+    const res = await fetch('/api/anime')
+    const data = await res.json()
     const items = Array.isArray(data.data) ? data.data : []
     featured.value = items[0] || null
     popular.value = items.slice(0, 5)
@@ -72,11 +73,12 @@ function goDetail(id: number) {
         <div class="row q-gutter-md">
           <div v-for="item in popular" :key="item.id" class="col-6 col-sm-4 col-md-2">
             <q-card class="bg-dark-card cursor-pointer" @click="goDetail(item.id)">
-              <q-img :src="item.poster_url" :ratio="2/3" fit="cover">
-                <div class="absolute-bottom text-subtitle2 text-center bg-dark text-white">
+              <div class="poster-wrapper">
+                <img :src="item.poster_url" :alt="item.title" class="poster-img" />
+                <div class="absolute-bottom text-subtitle2 text-center bg-dark text-white poster-title">
                   {{ item.title }}
                 </div>
-              </q-img>
+              </div>
             </q-card>
           </div>
         </div>
@@ -85,11 +87,12 @@ function goDetail(id: number) {
         <div class="row q-gutter-md">
           <div v-for="item in recent" :key="item.id" class="col-6 col-sm-4 col-md-2">
             <q-card class="bg-dark-card cursor-pointer" @click="goDetail(item.id)">
-              <q-img :src="item.poster_url" :ratio="2/3" fit="cover">
-                <div class="absolute-bottom text-subtitle2 text-center bg-dark text-white">
+              <div class="poster-wrapper">
+                <img :src="item.poster_url" :alt="item.title" class="poster-img" />
+                <div class="absolute-bottom text-subtitle2 text-center bg-dark text-white poster-title">
                   {{ item.title }}
                 </div>
-              </q-img>
+              </div>
             </q-card>
           </div>
         </div>
@@ -121,5 +124,26 @@ function goDetail(id: number) {
 .banner-content {
   padding: 2rem;
   max-width: 800px;
+}
+.poster-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 150%;
+  overflow: hidden;
+  background: #1e1e1e;
+}
+.poster-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.poster-title {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0.5rem;
 }
 </style>

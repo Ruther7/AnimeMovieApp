@@ -18,7 +18,7 @@ class WatchlistController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'anime_id' => 'required|integer|exists:anime,id',
+            'anime_id' => 'required|integer|exists:animes,id',
         ]);
 
         $item = Watchlist::create($validated);

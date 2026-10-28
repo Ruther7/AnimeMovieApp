@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import { animeApi, watchlistApi } from '../api/anime'
+import { watchlistApi } from '../api/anime'
 
 export interface Anime {
   id: number
@@ -33,7 +33,9 @@ onMounted(async () => {
     return
   }
   try {
-    anime.value = await animeApi.get(id)
+    const res = await fetch('/api/anime/' + id)
+    const data = await res.json()
+    anime.value = data
     const items = await watchlistApi.list()
     watchlistItems.value = Array.isArray(items) ? items : []
     inWatchlist.value = watchlistItems.value.some((w: any) => w.anime?.id === id)
@@ -80,7 +82,9 @@ async function toggleWatchlist() {
         <div class="overlay">
           <div class="content">
             <div class="row items-start q-gutter-lg">
-              <q-img :src="anime.poster_url" :ratio="2/3" width="220px" fit="cover" class="rounded-borders" />
+              <div class="poster-wrapper" style="width: 220px; padding-top: 150%;">
+                <img :src="anime.poster_url" :alt="anime.title" class="poster-img" />
+              </div>
               <div class="info">
                 <div class="text-h3 text-weight-bold">{{ anime.title }}</div>
                 <div class="q-mt-sm">
@@ -124,5 +128,19 @@ async function toggleWatchlist() {
 }
 .info {
   max-width: 700px;
+}
+.poster-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 150%;
+  overflow: hidden;
+  background: #1e1e1e;
+}
+.poster-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 </style>

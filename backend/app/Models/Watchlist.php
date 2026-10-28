@@ -10,6 +10,6 @@ class Watchlist extends Model
 
     public function anime()
     {
-        return $this->belongsTo(Anime::class);
+        return $this->belongsTo(Anime::class, 'anime_id', 'id', 'animes');
     }
 }

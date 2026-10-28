@@ -9,6 +9,8 @@ class Anime extends Model
 {
     use SoftDeletes;
 
+    protected $table = 'animes';
+
     protected $fillable = [
         'title',
         'synopsis',

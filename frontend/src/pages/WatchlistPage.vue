@@ -5,25 +5,41 @@ import { watchlistApi } from '../api/anime'
 
 const router = useRouter()
 const items = ref<any[]>([])
-const loading = ref(true)
+const loading = ref(false)
 const error = ref('')
+const fetchId = ref(0)
 
-onMounted(async () => {
-  await load()
-})
-
-async function load() {
+async function safeLoad() {
+  const currentId = ++fetchId.value
   loading.value = true
   error.value = ''
   try {
-    const data = await watchlistApi.list()
-    items.value = Array.isArray(data) ? data : []
-  } catch (e) {
-    error.value = 'Failed to load watchlist.'
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), 10000)
+    const res = await fetch('/api/watchlist', { signal: controller.signal })
+    clearTimeout(timeoutId)
+    const data = await res.json()
+    if (currentId === fetchId.value) {
+      items.value = Array.isArray(data) ? data : []
+    }
+  } catch (e: any) {
+    if (currentId === fetchId.value) {
+      if (e.name === 'AbortError') {
+        error.value = 'Request timed out.'
+      } else {
+        error.value = 'Failed to load watchlist.'
+      }
+    }
   } finally {
-    loading.value = false
+    if (currentId === fetchId.value) {
+      loading.value = false
+    }
   }
 }
+
+onMounted(() => {
+  safeLoad()
+})
 
 async function remove(id: number) {
   try {
@@ -58,11 +74,12 @@ function goDetail(id: number) {
     <div v-else class="row q-gutter-md">
       <div v-for="item in items" :key="item.id" class="col-6 col-sm-4 col-md-3 col-lg-2">
         <q-card class="bg-dark-card">
-          <q-img :src="item.anime?.poster_url" :ratio="2/3" fit="cover" @click="goDetail(item.anime!.id)">
-            <div class="absolute-bottom text-subtitle2 text-center bg-dark text-white">
+          <div class="poster-wrapper" @click="goDetail(item.anime!.id)">
+            <img :src="item.anime?.poster_url" :alt="item.anime?.title" class="poster-img" />
+            <div class="absolute-bottom text-subtitle2 text-center bg-dark text-white poster-title">
               {{ item.anime?.title }}
             </div>
-          </q-img>
+          </div>
           <q-card-actions align="center">
             <q-btn flat dense icon="delete" color="negative" label="Remove" @click="remove(item.id)" />
           </q-card-actions>
@@ -71,3 +88,27 @@ function goDetail(id: number) {
     </div>
   </q-page>
 </template>
+
+<style scoped>
+.poster-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 150%;
+  overflow: hidden;
+  background: #1e1e1e;
+}
+.poster-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.poster-title {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0.5rem;
+}
+</style>
