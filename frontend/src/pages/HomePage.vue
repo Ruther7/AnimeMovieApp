@@ -106,18 +106,20 @@ function goDetail(id: number) {
   width: 100%;
   height: 50vh;
   min-height: 320px;
+  position: relative;
+  overflow: hidden;
 }
 .banner-image {
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  inset: 0;
   background-size: cover;
   background-position: center;
-  position: relative;
+  background-repeat: no-repeat;
 }
 .banner-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.3));
+  background: linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0.35));
   display: flex;
   align-items: flex-end;
 }

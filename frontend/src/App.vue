@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { watchlistApi } from './api/anime'
+import { useRoute } from 'vue-router'
 
+const route = useRoute()
 const watchlistCount = ref(0)
 
 async function loadCount() {
@@ -14,6 +16,10 @@ async function loadCount() {
 }
 
 onMounted(() => {
+  loadCount()
+})
+
+watch(() => route.path, () => {
   loadCount()
 })
 </script>
